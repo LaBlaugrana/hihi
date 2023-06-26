@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 
@@ -23,7 +24,9 @@ class _RegisterPage extends State<RegisterPage> {
     _confirmPasscontroller.dispose();
 
   }
-  Future signUp() async{}
+  Future signUp() async{
+    FirebaseAuth.instance.createUserWithEmailAndPassword(email: _emailcontroller.text.trim(), password: _emailcontroller.text.trim());
+  }
 @override
 
 
