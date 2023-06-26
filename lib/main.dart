@@ -11,7 +11,7 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  runApp(Home());
+  runApp( Home());
 }
 
 class Home extends StatefulWidget {
@@ -28,7 +28,7 @@ class _HomeState extends State<Home> {
       theme: ThemeData(
         primaryColor: Colors.green,
       ),
-      home: AuthPage(),
+      home: MainPage(),
 
     );
   }

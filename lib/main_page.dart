@@ -3,10 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hush/Pages/Homepage.dart';
 import 'package:hush/Pages/login.dart';
+import 'package:hush/auth/auth_page.dart';
 
 
-class AuthPage extends StatelessWidget {
-  const AuthPage({Key? key}) : super(key: key);
+class MainPage extends StatelessWidget {
+  const MainPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +25,7 @@ class AuthPage extends StatelessWidget {
               }
               //user is not logged in
               else{
-                return AuthPage();
+                return  Authpage();
               }
             },
           )

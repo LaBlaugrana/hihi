@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 
 class RegisterPage extends StatefulWidget {
- final  VoidCallback showLoginPage;
- const RegisterPage({Key? key,required this.showLoginPage}) : super(key: key);
+ final  VoidCallback showLogin;
+ const RegisterPage({Key? key,required this.showLogin}) : super(key: key);
 
   @override
   State<RegisterPage> createState() => _RegisterPage();
@@ -11,9 +11,22 @@ class RegisterPage extends StatefulWidget {
 
 class _RegisterPage extends State<RegisterPage> {
   bool passwordObscured = true;
-  @override
+  final _emailcontroller=TextEditingController();
+  final _passwordcontroller=TextEditingController();
+  final _confirmPasscontroller=TextEditingController();
 
-  Future SignUp() async{}
+
+  @override
+  void dispose(){
+    _emailcontroller.dispose();
+    _passwordcontroller.dispose();
+    _confirmPasscontroller.dispose();
+
+  }
+  Future signUp() async{}
+@override
+
+
   Widget build(BuildContext context) {
     return Scaffold(
       // appBar:AppBar(systemOverlayStyle: SystemUiOverlayStyle(statusBarColor: Colors.grey),),
@@ -51,6 +64,7 @@ class _RegisterPage extends State<RegisterPage> {
                     Padding(
                       padding: const EdgeInsets.all(10),
                       child: TextField(
+                        controller: _emailcontroller,
                           decoration: InputDecoration(
                               filled: true,
                               suffixIcon: const Icon(
@@ -81,6 +95,7 @@ class _RegisterPage extends State<RegisterPage> {
                     Padding(
                       padding: const EdgeInsets.all(10),
                       child: TextField(
+                        controller: _passwordcontroller,
                           obscureText: passwordObscured,
                           decoration: InputDecoration(
                               filled: true,
@@ -123,6 +138,7 @@ class _RegisterPage extends State<RegisterPage> {
                     Padding(
                       padding: const EdgeInsets.all(10),
                       child: TextField(
+                        controller: _confirmPasscontroller,
                           obscureText: passwordObscured,
                           decoration: InputDecoration(
                               filled: true,
@@ -272,7 +288,7 @@ class _RegisterPage extends State<RegisterPage> {
                     Padding(
                       padding: const EdgeInsets.only(top: 10),
                       child: ElevatedButton(
-                        onPressed: SignUp,
+                        onPressed: signUp,
                         style: ElevatedButton.styleFrom(
                             backgroundColor: const Color(0xFF233C67),
                             minimumSize: const Size(324, 49),
@@ -290,12 +306,12 @@ class _RegisterPage extends State<RegisterPage> {
                     ),
 
                     Padding(
-                      padding:  EdgeInsets.only(top: 2),
+                      padding:  const EdgeInsets.only(top: 2),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children:  [
-                          Text("Already have an account?",style: TextStyle(fontFamily: 'poppins',fontSize: 10),),
-                          TextButton(onPressed:(){Navigator.of(context).pop();  },child: Text('Sign in',style: TextStyle(fontFamily: 'Poppins',color: Color(0xFF2856D7),fontSize: 10),))
+                          const  Text("Already have an account?",style: TextStyle(fontFamily: 'poppins',fontSize: 10),),
+                          TextButton(onPressed: widget.showLogin,child: const Text('Sign in',style: TextStyle(fontFamily: 'Poppins',color: Color(0xFF2856D7),fontSize: 10),))
                         ],
                       ),
                     )
