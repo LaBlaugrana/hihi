@@ -1,3 +1,5 @@
+import 'package:hush/bottom_navBar.dart';
+
 import '';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -189,7 +191,7 @@ class _TrackPageState extends State<TrackPage> {
 
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => Homepage()),
+          MaterialPageRoute(builder: (context) => NavBar()),
         );
 
         resetFirebase();

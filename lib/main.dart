@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hush/Pages/Homepage.dart';
+import 'package:hush/Pages/sleeponbo.dart';
 import 'package:hush/main_page.dart';
 import 'package:hush/Pages/login.dart';
 import 'package:hush/Pages/Register_page.dart';
@@ -29,7 +30,7 @@ class _HomeState extends State<Home> {
       theme: ThemeData(
         primaryColor: Colors.green,
       ),
-      home: MainPage(),
+      home: SplashScreen(),
 
     );
   }
