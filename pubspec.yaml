@@ -35,15 +35,24 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
+  google_sign_in: ^6.1.4
   firebase_core: ^2.14.0
+  cloud_firestore: ^4.8.2
   firebase_auth: ^4.6.3
+  firebase_core_dart: ^1.0.1
   carousel_slider: ^4.2.1
   google_nav_bar: ^5.0.6
   font_awesome_flutter: ^10.4.0
+  ionicons: ^0.2.2
+  http: ^0.13.3
+  get: ^4.3.8
+  shared_preferences: ^2.0.8
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  liquid_swipe: ^3.1.0
+  smooth_page_indicator: ^1.0.0+2
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
@@ -76,6 +85,7 @@ flutter:
     - assets/images/enjoy .png
     - assets/images/enjoy2.png
     - assets/images/tictactoe.gif
+    - assets/images/card_carouse11.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

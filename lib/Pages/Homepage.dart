@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:hush/Components/carousel_card.dart';
 
 
 
@@ -16,6 +17,7 @@ class  Homepage extends StatelessWidget {
   }
   final user=FirebaseAuth.instance.currentUser!;
 
+
   final CarouselController carouselController = CarouselController();
   int currentIndex = 0;
 
@@ -25,7 +27,7 @@ class  Homepage extends StatelessWidget {
     Container(decoration:BoxDecoration(borderRadius: BorderRadius.circular(11),color: Color(0xFFF4F8FF)) ,
 
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 10),
+        padding: const EdgeInsets.symmetric(horizontal: 8),
         child: GNav(activeColor:Color(0xFF233C67),tabBackgroundColor: Color(0xFF99AFD7),tabs: [
           GButton(icon: Icons.home),
           GButton(icon: Icons.app_registration),
@@ -53,42 +55,8 @@ class  Homepage extends StatelessWidget {
                 fontWeight: FontWeight.w300,
                 fontSize: 12),),
 
-  Padding(
-    padding: const EdgeInsets.only(top:30),
-    child: Center(
-      child: Container(height: 200,width: 430,decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(11),
-        color:Color(0xFF253F6D)
-      ),
-        child: Row(mainAxisAlignment:MainAxisAlignment.spaceBetween,children: [
-          Container(width:200,height: 200,decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(11),
-              color:Color(0xFF253F6D)
-
-          ),child: Column(children: [
-            Text('Article',style: TextStyle(color: Colors.white,fontFamily: 'Poppins'),),
+Carousel(),
             Padding(
-              padding: const EdgeInsets.only(top:10),
-              child: Text('   A good nights sleep is like a reset    button for the mind and body',style: TextStyle(fontFamily: 'Poppins',fontWeight:FontWeight.bold,color: Colors.white,fontSize: 10),),
-            ),
-          Padding(
-            padding: const EdgeInsets.only(top:80),
-            child: ElevatedButton(onPressed: (){}, child: Text('Read more'),
-            style: ButtonStyle(backgroundColor: MaterialStateProperty.all<Color>(Color(0xFF99AFD8)))),
-          )],
-            ),),
-          Container(width: 180,height: 200,decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(11),
-              color:Color(0xFF253F6D)
-          ),
-            child: ClipRRect(borderRadius: BorderRadius.circular(11),
-              clipBehavior: Clip.antiAlias,child: Image(image: AssetImage('assets/images/sleep1.png'),fit: BoxFit.cover,),)
-          )
-        ],),
-      ),
-    ),
-  )
-            ,Padding(
               padding: const EdgeInsets.only(top: 10),
               child: Text('Improve your sleep using',style: TextStyle(fontFamily: 'Poppins-med',fontWeight: FontWeight.bold),),
 

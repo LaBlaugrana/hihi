@@ -2,6 +2,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hush/Pages/Register_page.dart';
+import 'package:hush/services/auth_service.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+
+import 'fw_password.dart';
 
 class Login extends StatefulWidget {
    Login({Key? key,required this.showRegisterpage}) : super(key: key);
@@ -17,12 +21,26 @@ class _LoginState extends State<Login> {
   bool passwordObscured = true;
   final emailController =TextEditingController();
   final passwordController =TextEditingController();
+    String _error = '';
    void signin() async{
 
-    await FirebaseAuth.instance.signInWithEmailAndPassword(email: emailController.text, password: passwordController.text);
+     try {
+       await FirebaseAuth.instance.signInWithEmailAndPassword(email: emailController.text, password: passwordController.text);
+     } on FirebaseAuthException catch (e) {
+       if (e.code == 'wrong-password') {
+         setState(() {
+           _error = 'The password is incorrect. Please try again.';
+         });
+       } else {
+         setState(() {
+           _error = 'Something went wrong. Please try again.';
+         });
+       }
+     }
 
 
-  }
+
+   }
   @override
   void dispose(){
      emailController.dispose();
@@ -128,20 +146,28 @@ class _LoginState extends State<Login> {
                       child: Center(
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
-                            children: const [
-                              Text(
-                                'Forgot password? ',
+                            children:  [
+                              const Text(
+                                'Forgot password?',
                                 style: TextStyle(
-                                    fontFamily: 'Poppins',
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 10),
+                                  fontFamily: 'Poppins',
+                                  color: Colors.black,
+                                  fontSize: 10,
+                                  fontWeight: FontWeight.bold
+                                ),
                               ),
-                              Text('Change password',
-                                  style: TextStyle(
-                                      fontFamily: 'Poppins',
-                                      color: Colors.indigoAccent,
-                                      fontSize: 10)),
+                              TextButton(
+                                onPressed: (){
+                                  Navigator.push(context, MaterialPageRoute(builder:(context){
+                                    return ForgotPasswordPage();
+                                  }));
+                                },
+                                child: Text('Change password',
+                                    style: TextStyle(
+                                        fontFamily: 'Poppins',
+                                        color: Colors.indigoAccent,
+                                        fontSize: 10)),
+                              ),
                             ],
                           )),
                     ),
@@ -195,7 +221,7 @@ class _LoginState extends State<Login> {
                                 borderRadius: BorderRadius.circular(11.0),
                               ),
                               child: InkWell(
-                                  onTap: () {},
+                                  onTap:() => AuthService().signinWithGoogle(),
                                   child: Center(
                                       child: Image(
                                         image:

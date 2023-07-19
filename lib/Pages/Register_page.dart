@@ -19,14 +19,27 @@ class _RegisterPage extends State<RegisterPage> {
 
   @override
   void dispose(){
+    super.dispose();
     _emailcontroller.dispose();
     _passwordcontroller.dispose();
     _confirmPasscontroller.dispose();
 
   }
   Future signUp() async{
-    FirebaseAuth.instance.createUserWithEmailAndPassword(email: _emailcontroller.text.trim(), password: _emailcontroller.text.trim());
+    if(passwordConfirmed()){
+    FirebaseAuth.instance.createUserWithEmailAndPassword(email: _emailcontroller.text, password: _passwordcontroller.text);
+  }}
+
+
+  bool passwordConfirmed(){
+    if(_confirmPasscontroller.text.trim()==_passwordcontroller.text){
+      return true;
+    }
+    else{
+      return false;
+    }
   }
+
 @override
 
 
