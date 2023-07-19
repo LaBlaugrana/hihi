@@ -6,6 +6,11 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:hush/Components/carousel_card.dart';
+import 'package:hush/Pages/tic_tac_toe.dart';
+
+import 'Journal1/note1.dart';
+import 'SlumberQuest/main_menu.dart';
+import 'Track/Track_homepage.dart';
 
 
 
@@ -29,10 +34,13 @@ class  Homepage extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 8),
         child: GNav(activeColor:Color(0xFF233C67),tabBackgroundColor: Color(0xFF99AFD7),tabs: [
-          GButton(icon: Icons.home),
-          GButton(icon: Icons.app_registration),
-         GButton(icon:Icons.book,),
-          GButton(icon: Icons.account_box)
+          GButton(icon: Icons.home,onPressed: (){},),
+          GButton(icon: Icons.app_registration,onPressed: (){}),
+         GButton(icon:Icons.book,onPressed: (){Navigator.push(
+           context,
+           MaterialPageRoute(builder: (context) => NoteListScreen()),
+         );}),
+          GButton(icon: Icons.account_box,onPressed: (){})
         ],
 
         ),
@@ -69,7 +77,9 @@ Carousel(),
                 child: Row(mainAxisAlignment:MainAxisAlignment.spaceBetween,children: [
 
                   InkWell(
-                    onTap:(){},
+                    onTap:(){
+
+                    },
                     child: SizedBox(child:Container(height:152 ,width: 152,decoration: BoxDecoration(
                       color: Colors.white,
                       boxShadow: [
@@ -82,7 +92,10 @@ Carousel(),
                       ],
                       borderRadius: BorderRadius.circular(11)
                     ),
-                      child: ClipRRect(borderRadius:BorderRadius.circular(11),child: Image(image: AssetImage('assets/images/sleep journal.png'),)),
+                      child: GestureDetector(onTap:(){Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => NoteListScreen()),
+                      );},child: ClipRRect(borderRadius:BorderRadius.circular(11),child: Image(image: AssetImage('assets/images/sleep journal.png'),))),
                     ) ,),
                   ),
                   InkWell(
@@ -99,7 +112,9 @@ Carousel(),
                         ],
                         borderRadius: BorderRadius.circular(11)
                     ),
-                      child: ClipRRect(borderRadius:BorderRadius.circular(11),child: Image(image: AssetImage('assets/images/sleeptrack.png'),)),
+                      child: GestureDetector(onTap:(){Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => TrackPage()),);},child: ClipRRect(borderRadius:BorderRadius.circular(11),child: Image(image: AssetImage('assets/images/sleeptrack.png'),))),
                     ) ,),
                   )
 
@@ -108,28 +123,36 @@ Carousel(),
             ),
 Padding(
   padding: const EdgeInsets.only(top: 20),
-  child:   Container(child:Image(image: AssetImage('assets/images/enjoy2.png')),),
+  child:   GestureDetector(onTap:(){ Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => MainMenu()),);},child: Container(child:Image(image: AssetImage('assets/images/enjoy2.png')),)),
 ),
             Text('Try our Relaxers',style: TextStyle(fontFamily: 'Poppins-med',fontWeight: FontWeight.bold),),
 
             Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: SizedBox(width:100 ,height:100 ,child:
-                  Container(height:100,width: 100,decoration: BoxDecoration(
-                      color: Colors.white,
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withOpacity(0.5),
-                          blurRadius: 10.0,
-                          spreadRadius: 5.0,
-                          offset: Offset(0, 3),
-                        ),
-                      ],
-                      borderRadius: BorderRadius.circular(11)
-                  ),child:Image(image: AssetImage('assets/images/tictactoe.gif')),),
+                GestureDetector(
+                  onTap: (){Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => GameScreen()),
+                  );},
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: SizedBox(width:100 ,height:100 ,child:
+                    Container(height:100,width: 100,decoration: BoxDecoration(
+                        color: Colors.white,
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withOpacity(0.5),
+                            blurRadius: 10.0,
+                            spreadRadius: 5.0,
+                            offset: Offset(0, 3),
+                          ),
+                        ],
+                        borderRadius: BorderRadius.circular(11)
+                    ),child:Image(image: AssetImage('assets/images/tictactoe.gif')),),
 
+                    ),
                   ),
                 ),
                 Padding(

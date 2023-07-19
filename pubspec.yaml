@@ -86,6 +86,7 @@ flutter:
     - assets/images/enjoy2.png
     - assets/images/tictactoe.gif
     - assets/images/card_carouse11.png
+    - assets/images/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
