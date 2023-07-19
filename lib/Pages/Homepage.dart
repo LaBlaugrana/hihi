@@ -34,8 +34,12 @@ class  Homepage extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 8),
         child: GNav(activeColor:Color(0xFF233C67),tabBackgroundColor: Color(0xFF99AFD7),tabs: [
-          GButton(icon: Icons.home,onPressed: (){},),
-          GButton(icon: Icons.app_registration,onPressed: (){}),
+          GButton(icon: Icons.home,onPressed: (){Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => Homepage()),);},),
+          GButton(icon: Icons.app_registration,onPressed: (){Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => TrackPage()),);}),
          GButton(icon:Icons.book,onPressed: (){Navigator.push(
            context,
            MaterialPageRoute(builder: (context) => NoteListScreen()),

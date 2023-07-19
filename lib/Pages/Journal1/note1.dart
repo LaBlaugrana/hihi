@@ -94,7 +94,7 @@ class _NoteListScreenState extends State<NoteListScreen> {
                 ),
                 SizedBox(height: 8), // Add a SizedBox for vertical spacing
                 Padding(
-                  padding: EdgeInsets.fromLTRB(0, 0, 0, 8), // Add left padding to create margin
+                  padding: EdgeInsets.fromLTRB(0, 0, 0, 6), // Add left padding to create margin
                   child: Text(
                     'Write about how you feel! ',
                     style: TextStyle(
@@ -105,9 +105,16 @@ class _NoteListScreenState extends State<NoteListScreen> {
                 ),
               ],
             ),
-            Image.asset("assets/images/note.png")
+            Padding(
+              padding: const EdgeInsets.only(right: 43),
+              child: SizedBox(height:100,width:100,child: Image.asset("assets/images/note.png")),
+            ),
+          IconButton(icon: Icon(Icons.arrow_back),
+          color: Colors.black,
+          onPressed: () => Navigator.of(context).pop(),)
           ],
         ),
+        
       ),
       body: ListView.builder(
         itemCount: notes.length,

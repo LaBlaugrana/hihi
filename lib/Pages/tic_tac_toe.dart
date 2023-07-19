@@ -41,6 +41,7 @@ class _GameScreenState extends State<GameScreen> {
   Widget build(BuildContext context) {
     double boardWidth = MediaQuery.of(context).size.width;
     return Scaffold(
+      appBar: AppBar(),
         backgroundColor: MainColor.primaryColor,
         body: Column(
           mainAxisAlignment: MainAxisAlignment.center,
