@@ -106,7 +106,7 @@ class _NoteListScreenState extends State<NoteListScreen> {
               ],
             ),
             Padding(
-              padding: const EdgeInsets.only(right: 43),
+              padding: const EdgeInsets.only(right:0),
               child: SizedBox(height:100,width:100,child: Image.asset("assets/images/note.png")),
             ),
           IconButton(icon: Icon(Icons.arrow_back),

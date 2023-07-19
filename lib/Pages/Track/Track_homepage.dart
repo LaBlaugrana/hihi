@@ -187,10 +187,10 @@ class _TrackPageState extends State<TrackPage> {
         }).catchError((error) {
         });
 
-        // Navigator.push(
-        //   context,
-        //   MaterialPageRoute(builder: (context) => NavBar()),
-        // );
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => Homepage()),
+        );
 
         resetFirebase();
 
@@ -215,132 +215,148 @@ class _TrackPageState extends State<TrackPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack(
-        children: [
-          Positioned.fill(
-            child: Image.asset(
-              'assets/images/sleepassesbg.png',
-              fit: BoxFit.cover,
+      appBar: AppBar(toolbarHeight: 40,automaticallyImplyLeading: false,
+          backgroundColor: Color(0xffF4F8FF),
+          actions: [
+          Padding(
+            padding: const EdgeInsets.only(top:2),
+            child: IconButton(
+
+            icon: Icon(Icons.exit_to_app),
+        color: Colors.black,
+        onPressed: () {
+              Navigator.pop(context);
+            // Do
+        }),
+          ),]),
+      body: SafeArea(
+        child: Stack(
+          children: [
+            Positioned.fill(
+              child: Image.asset(
+                'assets/images/sleepassesbg.png',
+                fit: BoxFit.cover,
+              ),
             ),
-          ),
-          Positioned.fill(
-            child: Center(
-              child: Container(
-                width: 324,
-                height: 462,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(33),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(0.2),
-                      blurRadius: 10,
-                      offset: const Offset(0, 3),
-                    ),
-                  ],
-                ),
-                child: Column(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(16),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          IconButton(
-                            onPressed: previousQuestion,
-                            icon: const Icon(
-                              Icons.arrow_back,
-                              color: Colors.black,
+            Positioned.fill(
+              child: Center(
+                child: Container(
+                  width: 324,
+                  height: 462,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(33),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.2),
+                        blurRadius: 10,
+                        offset: const Offset(0, 3),
+                      ),
+                    ],
+                  ),
+                  child: Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(16),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            IconButton(
+                              onPressed: previousQuestion,
+                              icon: const Icon(
+                                Icons.arrow_back,
+                                color: Colors.black,
+                              ),
                             ),
-                          ),
-                          Container(
-                            width: 152,
-                            height: 6,
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(3),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.black.withOpacity(0.2),
-                                  blurRadius: 3,
-                                  offset: const Offset(0, 1),
-                                ),
-                              ],
-                            ),
-                            child: Align(
-                              alignment: Alignment.centerLeft,
-                              child: FractionallySizedBox(
-                                widthFactor: (questionIndex + 1) / 4,
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                    color: const Color(0xFF233C67),
-                                    borderRadius: BorderRadius.circular(3),
+                            Container(
+                              width: 152,
+                              height: 6,
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(3),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.black.withOpacity(0.2),
+                                    blurRadius: 3,
+                                    offset: const Offset(0, 1),
+                                  ),
+                                ],
+                              ),
+                              child: Align(
+                                alignment: Alignment.centerLeft,
+                                child: FractionallySizedBox(
+                                  widthFactor: (questionIndex + 1) / 4,
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      color: const Color(0xFF233C67),
+                                      borderRadius: BorderRadius.circular(3),
+                                    ),
                                   ),
                                 ),
                               ),
                             ),
-                          ),
-                          IconButton(
-                            onPressed: () {
-                              Navigator.push(context, MaterialPageRoute(builder: (context) => Homepage()));
-                            },
-                            icon: const Icon(
-                              Icons.close,
-                              color: Colors.black,
+                            IconButton(
+                              onPressed: () {
+                                Navigator.push(context, MaterialPageRoute(builder: (context) => Homepage()));
+                              },
+                              icon: const Icon(
+                                Icons.close,
+                                color: Colors.black,
+                              ),
                             ),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(height: 0),
+                      buildQuestion(questionIndex),
+                      const SizedBox(height: 7),
+                      buildImage(questionIndex),
+                      const SizedBox(height: 0),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          RoundedButton(
+                            backgroundColor: const Color(0xFFFDFCFF),
+                            icon: Icons.remove,
+                            onPressed: decreaseNumber,
+                          ),
+                          const SizedBox(width: 16),
+                          NumberButton(number: number),
+                          const SizedBox(width: 16),
+                          RoundedButton(
+                            backgroundColor: const Color(0xFFFDFCFF),
+                            icon: Icons.add,
+                            onPressed: increaseNumber,
                           ),
                         ],
                       ),
-                    ),
-                    const SizedBox(height: 0),
-                    buildQuestion(questionIndex),
-                    const SizedBox(height: 7),
-                    buildImage(questionIndex),
-                    const SizedBox(height: 0),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        RoundedButton(
-                          backgroundColor: const Color(0xFFFDFCFF),
-                          icon: Icons.remove,
-                          onPressed: decreaseNumber,
-                        ),
-                        const SizedBox(width: 16),
-                        NumberButton(number: number),
-                        const SizedBox(width: 16),
-                        RoundedButton(
-                          backgroundColor: const Color(0xFFFDFCFF),
-                          icon: Icons.add,
-                          onPressed: increaseNumber,
-                        ),
-                      ],
-                    ),
 
-                    //NEXT BUTTON
+                      //NEXT BUTTON
 
-                    const SizedBox(height: 16),
-                    ElevatedButton(
-                      onPressed: () {
-                        if (questionIndex == 3) {
-                          const Text('Submit');
-                          nextQuestion();
-                        } else {
-                          nextQuestion();
-                        }
-                      },
-                      style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.all<Color>(
-                          const Color(0xFF233C67),
+                      const SizedBox(height: 16),
+                      ElevatedButton(
+                        onPressed: () {
+                          if (questionIndex == 3) {
+                            const Text('Submit');
+                            nextQuestion();
+                          } else {
+                            nextQuestion();
+                          }
+                        },
+                        style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all<Color>(
+                            const Color(0xFF233C67),
+                          ),
                         ),
+                        child: Text(questionIndex == 3 ? 'Submit' : 'Next'),
                       ),
-                      child: Text(questionIndex == 3 ? 'Submit' : 'Next'),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

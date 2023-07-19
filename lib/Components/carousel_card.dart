@@ -30,7 +30,8 @@ class Carousel extends StatelessWidget {
                 Image.asset(item[0], fit: BoxFit.cover, width: 1000.0),
                 Positioned(
                   top: 13,
-                  left: 20,
+                  left: 20,bottom: 15,
+
                   child: Container(
                     child: Text(
                       "Article",
@@ -48,13 +49,13 @@ class Carousel extends StatelessWidget {
                   left: 0.0,
                   right: 0.0,
                   child: Container(
-                    padding: EdgeInsets.fromLTRB(20, 0, 40, 45),
+                    padding: EdgeInsets.fromLTRB(20, 0, 40, 60),
                     child: Text(
                       item[1],
                       style: TextStyle(
                         fontFamily: 'Poppins',
                         color: Colors.white,
-                        fontSize: 15.0,
+                        fontSize: 12,
                         fontWeight: FontWeight.bold,
                       ),
                     ),

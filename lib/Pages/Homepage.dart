@@ -14,42 +14,39 @@ import 'Track/Track_homepage.dart';
 
 
 
-class  Homepage extends StatelessWidget {
+class  Homepage extends StatefulWidget {
   Homepage({Key? key}) : super(key: key);
+
+  @override
+  State<Homepage> createState() => _HomepageState();
+}
+
+class _HomepageState extends State<Homepage> {
+  int _selectedIndex =0;
+
+  void navigatebottombar(int index){
+    setState((
+
+        ){
+      _selectedIndex= index;
+
+    });
+  }
+
 
   void signUserOut() {
     FirebaseAuth.instance.signOut();
   }
+
   final user=FirebaseAuth.instance.currentUser!;
 
-
   final CarouselController carouselController = CarouselController();
+
   int currentIndex = 0;
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(bottomNavigationBar:
-    Container(decoration:BoxDecoration(borderRadius: BorderRadius.circular(11),color: Color(0xFFF4F8FF)) ,
-
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 8),
-        child: GNav(activeColor:Color(0xFF233C67),tabBackgroundColor: Color(0xFF99AFD7),tabs: [
-          GButton(icon: Icons.home,onPressed: (){Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => Homepage()),);},),
-          GButton(icon: Icons.app_registration,onPressed: (){Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => TrackPage()),);}),
-         GButton(icon:Icons.book,onPressed: (){Navigator.push(
-           context,
-           MaterialPageRoute(builder: (context) => NoteListScreen()),
-         );}),
-          GButton(icon: Icons.account_box,onPressed: (){})
-        ],
-
-        ),
-      ),
-    ),
+    return Scaffold(
       body: SafeArea(
         child: ListView(
 
@@ -70,7 +67,10 @@ class  Homepage extends StatelessWidget {
 Carousel(),
             Padding(
               padding: const EdgeInsets.only(top: 10),
-              child: Text('Improve your sleep using',style: TextStyle(fontFamily: 'Poppins-med',fontWeight: FontWeight.bold),),
+              child: Padding(
+                padding: const EdgeInsets.only(bottom: 10,left:20),
+                child: Text('Improve your sleep using',style: TextStyle(fontFamily: 'Poppins-med',fontWeight: FontWeight.bold),),
+              ),
 
             )
             ,
@@ -131,17 +131,41 @@ Padding(
       context,
       MaterialPageRoute(builder: (context) => MainMenu()),);},child: Container(child:Image(image: AssetImage('assets/images/enjoy2.png')),)),
 ),
-            Text('Try our Relaxers',style: TextStyle(fontFamily: 'Poppins-med',fontWeight: FontWeight.bold),),
+            Padding(
+              padding: const EdgeInsets.only(bottom: 10,left:20),
+              child: Text('Try our Relaxers',style: TextStyle(fontFamily: 'Poppins-med',fontWeight: FontWeight.bold),),
+            ),
 
-            Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                GestureDetector(
-                  onTap: (){Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => GameScreen()),
-                  );},
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
+            Padding(
+              padding: const EdgeInsets.only(right:15 ,left:15),
+              child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  GestureDetector(
+                    onTap: (){Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => GameScreen()),
+                    );},
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: SizedBox(width:100 ,height:100 ,child:
+                      Container(height:100,width: 100,decoration: BoxDecoration(
+                          color: Colors.white,
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withOpacity(0.5),
+                              blurRadius: 10.0,
+                              spreadRadius: 5.0,
+                              offset: Offset(0, 3),
+                            ),
+                          ],
+                          borderRadius: BorderRadius.circular(11)
+                      ),child:Image(image: AssetImage('assets/images/tictactoe.gif')),),
+
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 1),
                     child: SizedBox(width:100 ,height:100 ,child:
                     Container(height:100,width: 100,decoration: BoxDecoration(
                         color: Colors.white,
@@ -157,48 +181,29 @@ Padding(
                     ),child:Image(image: AssetImage('assets/images/tictactoe.gif')),),
 
                     ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 1),
-                  child: SizedBox(width:100 ,height:100 ,child:
-                  Container(height:100,width: 100,decoration: BoxDecoration(
-                      color: Colors.white,
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withOpacity(0.5),
-                          blurRadius: 10.0,
-                          spreadRadius: 5.0,
-                          offset: Offset(0, 3),
-                        ),
-                      ],
-                      borderRadius: BorderRadius.circular(11)
-                  ),child:Image(image: AssetImage('assets/images/tictactoe.gif')),),
+                  ),Padding(
+                    padding: const EdgeInsets.only(left: 1),
+                    child: SizedBox(width:100 ,height:100 ,child:
+                    Container(height:100,width: 100,decoration: BoxDecoration(
+                        color: Colors.white,
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withOpacity(0.5),
+                            blurRadius: 10.0,
+                            spreadRadius: 5.0,
+                            offset: Offset(0, 3),
+                          ),
+                        ],
+                        borderRadius: BorderRadius.circular(11)
+                    ),child:Image(image: AssetImage('assets/images/tictactoe.gif')),),
 
-                  ),
-                ),Padding(
-                  padding: const EdgeInsets.only(left: 1),
-                  child: SizedBox(width:100 ,height:100 ,child:
-                  Container(height:100,width: 100,decoration: BoxDecoration(
-                      color: Colors.white,
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withOpacity(0.5),
-                          blurRadius: 10.0,
-                          spreadRadius: 5.0,
-                          offset: Offset(0, 3),
-                        ),
-                      ],
-                      borderRadius: BorderRadius.circular(11)
-                  ),child:Image(image: AssetImage('assets/images/tictactoe.gif')),),
-
-                  ),
-                ), ],
+                    ),
+                  ), ],
+              ),
             )
         ]
         ),
       ),
     );
   }
-
 }

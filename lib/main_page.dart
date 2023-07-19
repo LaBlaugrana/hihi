@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:hush/Pages/Homepage.dart';
 import 'package:hush/Pages/login.dart';
 import 'package:hush/auth/auth_page.dart';
+import 'package:hush/bottom_navBar.dart';
 
 
 class MainPage extends StatelessWidget {
@@ -21,7 +22,7 @@ class MainPage extends StatelessWidget {
             builder: (context,snapshot){
               //user is logged in
               if (snapshot.hasData){
-                return  Homepage();
+                return  NavBar();
               }
               //user is not logged in
               else{
