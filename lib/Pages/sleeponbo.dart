@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:hush/auth/auth_page.dart';
+import 'package:hush/main_page.dart';
 import 'package:liquid_swipe/liquid_swipe.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
-import '../main_page.dart';
 // import 'package:untitled/screens/home_page/pages/new-main.dart';
 
 // import '../home_page/pages/main_page.dart';
@@ -16,8 +15,8 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-  static const spimg = 'images/newsplashmid.png';
-  static const bgimg = 'images/newsplashbg.png';
+  static const spimg = 'assets/images/newsplashmid.png';
+  static const bgimg = 'assets/images/newsplashbg.png';
   bool animate = false;
 
   @override
@@ -189,7 +188,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                     print("working");
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => Authpage()),
+                      MaterialPageRoute(builder: (context) => const MainPage()),
                     );
                   }
                 },
@@ -312,7 +311,7 @@ const String onBoardPg2img = "assets/images/journalonbo.png";
 const String onBoardPg3img = "assets/images/quizonbo.png";
 const String onBoardPg4img = "assets/images/gameonbo.png";
 const splashImg = "assets/images/splashimg.png";
-const splashimg = "intro_app_1-removebg-preview.png";
+const splashimg = "assets/intro_app_1-removebg-preview.png";
 
 const defaultSize = 15.0;
 

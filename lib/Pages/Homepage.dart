@@ -51,7 +51,7 @@ class _HomepageState extends State<Homepage> {
         child: ListView(
 
           children: [
-            Row(children: [IconButton(onPressed: (){signUserOut();}, icon:Icon(Icons.logout))],),
+           
             Padding(
               padding: const EdgeInsets.only(top: 30),
               child: Text('Hi ${user.email}', style: TextStyle(fontSize: 20,

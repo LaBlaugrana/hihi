@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:hush/Pages/Homepage.dart';
 import 'package:hush/Pages/Journal1/note1.dart';
 import 'package:hush/Pages/Track/Track_homepage.dart';
+import 'package:hush/Pages/profile.dart';
 
 
 
@@ -21,7 +22,7 @@ class _NavBarState extends State<NavBar> {
     Homepage(),
     TrackPage(),
     NoteListScreen(),
-    // ProfileScreen(),
+    ProfileScreen(),
 
 
   ];
