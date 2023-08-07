@@ -1,10 +1,13 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:hush/Pages/Register_page.dart';
-import 'package:hush/services/auth_service.dart';
+// import 'package:hush/Pages/Register_page.dart';
+// import 'package:hush/services/auth_service.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
+import '../bottom_navBar.dart';
+import '../services/auth_service.dart';
 import 'fw_password.dart';
 
 class Login extends StatefulWidget {
@@ -22,25 +25,6 @@ class _LoginState extends State<Login> {
   final emailController =TextEditingController();
   final passwordController =TextEditingController();
     String _error = '';
-   void signin() async{
-
-     try {
-       await FirebaseAuth.instance.signInWithEmailAndPassword(email: emailController.text, password: passwordController.text);
-     } on FirebaseAuthException catch (e) {
-       if (e.code == 'wrong-password') {
-         setState(() {
-           _error = 'The password is incorrect. Please try again.';
-         });
-       } else {
-         setState(() {
-           _error = 'Something went wrong. Please try again.';
-         });
-       }
-     }
-
-
-
-   }
   @override
   void dispose(){
      emailController.dispose();
@@ -74,7 +58,7 @@ class _LoginState extends State<Login> {
                           child: Align(
                               alignment: Alignment.centerLeft,
                               child: Text(
-                                'Username',
+                                'Email',
                                 style: TextStyle(
                                     fontFamily: 'Poppins',
                                     fontSize: 12,
@@ -88,7 +72,7 @@ class _LoginState extends State<Login> {
                           decoration: InputDecoration(
                               filled: true,
                               suffixIcon: Icon(
-                                Icons.account_box_outlined,
+                                Icons.email,
                                 color: Colors.indigo,
                               ),
                               fillColor: const Color(0xFFF4F8FF),
@@ -230,71 +214,37 @@ class _LoginState extends State<Login> {
                                         width: 25,
                                       )))),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Container(
-                              width: 49,
-                              height: 49,
-                              decoration: BoxDecoration(
-                                color: Color(0xFFF4F8FF),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Color(0xFFF4F8FF).withOpacity(0.5),
-                                    spreadRadius: 2,
-                                    blurRadius: 5,
-                                    offset: Offset(0, 3),
-                                  ),
-                                ],
-                                border: Border.all(
-                                    color: const Color(0xFFD5D9EE), width: 1),
-                                borderRadius: BorderRadius.circular(11.0),
-                              ),
-                              child: InkWell(
-                                  onTap: () {},
-                                  child: Center(
-                                      child: Image(
-                                        image:
-                                        AssetImage('assets/images/apple.png'),
-                                        height: 25,
-                                        width: 25,
-                                      )))),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Container(
-                              width: 49,
-                              height: 49,
-                              decoration: BoxDecoration(
-                                color: Color(0xFFF4F8FF),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Color(0xFFF4F8FF).withOpacity(0.5),
-                                    spreadRadius: 2,
-                                    blurRadius: 5,
-                                    offset: Offset(0, 3),
-                                  ),
-                                ],
-                                border: Border.all(
-                                    color: const Color(0xFFD5D9EE), width: 1),
-                                borderRadius: BorderRadius.circular(11.0),
-                              ),
-                              child: InkWell(
-                                  onTap: () {},
-                                  child: Center(
-                                      child: Image(
-                                        image: AssetImage(
-                                            'assets/images/facebook.png'),
-                                        height: 25,
-                                        width: 25,
-                                      )))),
-                        ),
+
                       ],
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 20),
                       child: ElevatedButton(
-                        onPressed: () {
-                          signin();
+                        onPressed: () async {
+                          await FirebaseAuth.instance.signOut();
+                          print("*********************************");
+                          print(emailcontroller.text);
+                          print(FirebaseAuth.instance.currentUser);
+                          try {
+                            await FirebaseAuth.instance.signInWithEmailAndPassword(email: emailController.text, password: passwordController.text);
+                          } on FirebaseAuthException catch (e) {
+                            if (e.code == 'wrong-password') {
+                              setState(() {
+                                _error = 'The password is incorrect. Please try again.';
+                              });
+                            } else {
+                              setState(() {
+                                _error = 'Something went wrong. Please try again.';
+                              });
+                            }
+                          }
+                          SharedPreferences prefs = await SharedPreferences.getInstance();
+                          prefs.setBool("loggedIn", true);
+                          print(FirebaseAuth.instance.currentUser);
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(builder: (context) => NavBar()),
+                          );
                         },
                         child: Text(
                           'Sign in',

@@ -1,10 +1,14 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:hush/Pages/Homepage.dart';
-import 'package:hush/Pages/login.dart';
-import 'package:hush/auth/auth_page.dart';
-import 'package:hush/bottom_navBar.dart';
+// import 'package:hush/Pages/Homepage.dart';
+// import 'package:hush/Pages/login.dart';
+// import 'package:hush/auth/auth_page.dart';
+// import 'package:hush/bottom_navBar.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import 'auth/auth_page.dart';
+import 'bottom_navBar.dart';
 
 
 class MainPage extends StatelessWidget {
@@ -22,6 +26,7 @@ class MainPage extends StatelessWidget {
             builder: (context,snapshot){
               //user is logged in
               if (snapshot.hasData){
+                saveData();
                 return  NavBar();
               }
               //user is not logged in
@@ -32,5 +37,10 @@ class MainPage extends StatelessWidget {
           )
       ),
     );
+  }
+
+  void saveData() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setBool("loggedIn", true);
   }
 }

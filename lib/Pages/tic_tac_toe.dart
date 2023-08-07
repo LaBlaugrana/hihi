@@ -41,7 +41,7 @@ class _GameScreenState extends State<GameScreen> {
   Widget build(BuildContext context) {
     double boardWidth = MediaQuery.of(context).size.width;
     return Scaffold(
-      appBar: AppBar(),
+
         backgroundColor: MainColor.primaryColor,
         body: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -110,7 +110,7 @@ class _GameScreenState extends State<GameScreen> {
                           game.board![index],
                           style: TextStyle(
                             color: game.board![index] == "X"
-                                ? Colors.blue
+                                ? Colors.white
                                 : Colors.pink,
                             fontSize: 64.0,
                           ),
@@ -128,6 +128,7 @@ class _GameScreenState extends State<GameScreen> {
               result,
               style: TextStyle(color: Colors.white, fontSize: 54.0),
             ),
+            SizedBox(height: 15,),
             ElevatedButton.icon(
               onPressed: () {
                 setState(() {
@@ -140,8 +141,15 @@ class _GameScreenState extends State<GameScreen> {
                   scoreboard = [0, 0, 0, 0, 0, 0, 0, 0];
                 });
               },
-              label: Text("Play Again"),
-              icon: Icon(Icons.replay),
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all<Color>(MainColor.accentColor),
+              ),
+
+              label: Text("Play Again",style: TextStyle(
+                color: Colors.black87
+              ),),
+              icon: Icon(Icons.replay,
+              color: Colors.black87,),
             ),
           ],
         ));
@@ -196,7 +204,7 @@ class Game {
 
 
 class MainColor {
-  static Color primaryColor = Color(0xFFff4b4b);
-  static Color secondaryColor = Color(0xFFffca27);
-  static Color accentColor = Color(0xFF4169e8);
+  static Color primaryColor = Color(0xFF1c1c1c);
+  static Color secondaryColor = Color(0xFF233C67);
+  static Color accentColor = Colors.yellowAccent;
 }

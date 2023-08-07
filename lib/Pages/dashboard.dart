@@ -1,9 +1,11 @@
 
+import 'package:Hush/Pages/profile.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:hush/Pages/profile.dart';
+// import 'package:hush/Pages/profile.dart';
 import 'package:ionicons/ionicons.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class UpdateProfileScreen extends StatefulWidget {
   const UpdateProfileScreen({Key? key}) : super(key: key);
@@ -27,39 +29,15 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
     fetchInfo();
   }
 
-  void fetchInfo(){
+  Future<void> fetchInfo() async {
 
-    FirebaseFirestore firestore = FirebaseFirestore.instance;
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    avg_duration = await prefs.getDouble('avg_sleep') ?? 0.0;
+    avg_wakes = await prefs.getDouble('avg_wakeup') ?? 0.0;
+    avg_timeToSleep = await prefs.getDouble('avg_rested') ?? 0.0;
+    avg_quality = await prefs.getDouble('avg_quality') ?? 0.0;
+    setState(() {});
 
-    firestore.collection('numberValues').doc('duration').get().then((doc) {
-      if (doc.exists) {
-        setState(() {
-          avg_duration = doc.data()?['value'];
-        });
-      }}).catchError((error) {
-    });
-    //
-    firestore.collection('numberValues').doc('wakes').get().then((doc) {
-      if (doc.exists) {
-        setState(() {
-          avg_wakes = doc.data()?['value'];
-        });
-      }}).catchError((error) {
-    });
-    firestore.collection('numberValues').doc('timeToSleep').get().then((doc) {
-      if (doc.exists) {
-        setState(() {
-          avg_timeToSleep = doc.data()?['value'];
-        });
-      }}).catchError((error) {
-    });
-    firestore.collection('numberValues').doc('quality').get().then((doc) {
-      if (doc.exists) {
-        setState(() {
-          avg_quality = doc.data()?['value'];
-        });
-      }}).catchError((error) {
-    });
   }
 
   @override
@@ -225,12 +203,12 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                   color: Color(0xFF233C67),
                   borderRadius: BorderRadius.circular(10),
                 ),
-                padding: const EdgeInsets.fromLTRB(62, 45, 62, 45),
+                padding: const EdgeInsets.fromLTRB(35, 45, 35, 45),
                 // margin: const EdgeInsets.symmetric(vertical: 10),
                 child: Column(
                   children: [
                     Text(
-                      'Average Rested you felt',
+                      'Average Ease in falling Asleep',
                       style: TextStyle(
                         fontFamily: 'Times New Roman',
                         color: Colors.white,

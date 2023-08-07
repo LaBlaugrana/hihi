@@ -1,7 +1,8 @@
 // import 'package:quizz_app/model/question_model.dart';
 
 
-import 'package:hush/Pages/SlumberQuest/question_model.dart';
+import 'package:Hush/Pages/SlumberQuest/question_model.dart';
+// import 'package:hush/Pages/SlumberQuest/question_model.dart';
 
 // import '../model/question_model.dart';
 

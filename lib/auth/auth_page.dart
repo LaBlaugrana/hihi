@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:hush/Pages/Register_page.dart';
-import 'package:hush/Pages/login.dart';
+// import 'package:hush/Pages/Register_page.dart';
+// import 'package:hush/Pages/login.dart';
+
+import '../Pages/Register_page.dart';
+import '../Pages/login.dart';
 
 
 class Authpage extends StatefulWidget {

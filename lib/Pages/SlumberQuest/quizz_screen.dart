@@ -1,7 +1,9 @@
 
+import 'package:Hush/Pages/SlumberQuest/questions_example.dart';
+import 'package:Hush/Pages/SlumberQuest/result_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:hush/Pages/SlumberQuest/questions_example.dart';
-import 'package:hush/Pages/SlumberQuest/result_screen.dart';
+// import 'package:hush/Pages/SlumberQuest/questions_example.dart';
+// import 'package:hush/Pages/SlumberQuest/result_screen.dart';
 // import 'package:quizz_app/data/questions_example.dart';
 // import 'package:quizz_app/screens/result_screen.dart';
 // import 'package:quizz_app/ui/shared/color.dart';

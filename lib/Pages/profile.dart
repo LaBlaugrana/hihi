@@ -1,25 +1,45 @@
 import 'dart:ffi';
 
 // import 'package:dashboard/profile/update_profile.dart';
-import 'package:hush/pages/Homepage.dart';
+// import 'package:hush/Components/aboutuspage.dart';
+// import 'package:hush/auth/auth_page.dart';
+// import 'package:hush/pages/Homepage.dart';
 
 import 'package:carousel_slider/carousel_controller.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:hush/bottom_navBar.dart';
-import 'package:hush/main_page.dart';
+// import 'package:hush/bottom_navBar.dart';
+// import 'package:hush/main_page.dart';
 // import 'package:dashboard/main.dart';
 import 'package:ionicons/ionicons.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
+import '../Components/aboutuspage.dart';
+import '../Components/termspage.dart';
+import '../auth/auth_page.dart';
+import '../bottom_navBar.dart';
 import 'dashboard.dart';
-void signUserOut() {
-  FirebaseAuth.instance.signOut();
+
+void removeAllAndPushNew(BuildContext context, Widget newPage) {
+  Navigator.of(context).pushAndRemoveUntil(
+    MaterialPageRoute(builder: (BuildContext context) => newPage),
+    (Route<dynamic> route) => false,
+  );
 }
 
 final user = FirebaseAuth.instance.currentUser!;
 
-
 class ProfileScreen extends StatelessWidget {
+  String username = "User";
+  late String email;
+
+  Future<void> getDetails() async {
+    User? user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      username = user.displayName ?? username;
+      email = user.email ?? "Error Fetching Email";
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -37,14 +57,15 @@ class ProfileScreen extends StatelessWidget {
         ),
         title: Center(child: Text('Profile')),
         actions: [
-          IconButton(onPressed: () {
-          //   Navigator.push(
-          //   context,
-          //   MaterialPageRoute(builder: (context) => Settings()),
-          // );
-            }
-
-          , icon: Icon(Ionicons.settings_outline))
+          IconButton(
+              onPressed: () {
+                //   Navigator.push(
+                //   context,
+                //   MaterialPageRoute(builder: (context) => Settings()),
+                // );
+                print(user);
+              },
+              icon: Icon(Ionicons.settings_outline))
         ],
       ),
       body: SingleChildScrollView(
@@ -66,31 +87,41 @@ class ProfileScreen extends StatelessWidget {
               SizedBox(
                 height: 15,
               ),
-              Text(
-                'Sam Altman',
-                style: TextStyle(
-                    fontFamily: 'Poppins',
-                    fontSize: 18,
-                    fontWeight: FontWeight.w500),
-              ),
-              Text(
-                'altman.sam752@hotmail.com',
-                style: TextStyle(
-                    fontFamily: 'Poppins',
-                    fontSize: 18,
-                    fontWeight: FontWeight.w400),
+              FutureBuilder(
+                future: getDetails(),
+                builder:
+                    (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+                  return Column(
+                    children: [
+                      Text(
+                        '${username}',
+                        style: TextStyle(
+                            fontFamily: 'Poppins',
+                            fontSize: 18,
+                            fontWeight: FontWeight.w500),
+                      ),
+                      Text(
+                        '${email}',
+                        style: TextStyle(
+                            fontFamily: 'Poppins',
+                            fontSize: 18,
+                            fontWeight: FontWeight.w400),
+                      ),
+                    ],
+                  );
+                },
               ),
               // const Divider(),
               SizedBox(
                 height: 25,
               ),
               GestureDetector(
-                onTap: (){
+                onTap: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => UpdateProfileScreen()),
+                    MaterialPageRoute(
+                        builder: (context) => UpdateProfileScreen()),
                   );
-
                 },
                 child: SizedBox(
                   height: 50,
@@ -125,14 +156,25 @@ class ProfileScreen extends StatelessWidget {
                   ),
                   title: Center(
                       child: Text(
-                        'Terms & Conditions',
-                        style: TextStyle(fontFamily: 'Poppins', fontSize: 17),
-                      )),
-                  trailing: Icon(
-                    Ionicons.arrow_forward_circle,
-                    color: Color(0xFF233C67),
-                    size: 30,
+                    'Terms & Conditions',
+                    style: TextStyle(fontFamily: 'Poppins', fontSize: 17),
+                  )),
+                  trailing: GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => termspage(),
+                        ),
+                      );
+                    },
+                    child: Icon(
+                      Ionicons.arrow_forward_circle,
+                      color: Color(0xFF233C67),
+                      size: 30,
+                    ),
                   ),
+
                 ),
               ),
               Padding(
@@ -146,9 +188,9 @@ class ProfileScreen extends StatelessWidget {
                     padding: EdgeInsets.fromLTRB(10, 0, 50, 0),
                     child: Center(
                         child: Text(
-                          'Privacy Policy',
-                          style: TextStyle(fontFamily: 'Poppins', fontSize: 17),
-                        )),
+                      'Privacy Policy',
+                      style: TextStyle(fontFamily: 'Poppins', fontSize: 17),
+                    )),
                   ),
                   trailing: Icon(
                     Ionicons.arrow_forward_circle,
@@ -168,14 +210,24 @@ class ProfileScreen extends StatelessWidget {
                     padding: EdgeInsets.fromLTRB(0, 0, 99, 0),
                     child: Center(
                         child: Text(
-                          'About',
-                          style: TextStyle(fontFamily: 'Poppins', fontSize: 17),
-                        )),
+                      'About',
+                      style: TextStyle(fontFamily: 'Poppins', fontSize: 17),
+                    )),
                   ),
-                  trailing: Icon(
-                    Ionicons.arrow_forward_circle,
-                    color: Color(0xFF233C67),
-                    size: 30,
+                  trailing: GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => aboutuspage(),
+                        ),
+                      );
+                    },
+                    child: Icon(
+                      Ionicons.arrow_forward_circle,
+                      color: Color(0xFF233C67),
+                      size: 30,
+                    ),
                   ),
                 ),
               ),
@@ -192,8 +244,16 @@ class ProfileScreen extends StatelessWidget {
                   height: 55,
                   width: 200,
                   child: ElevatedButton(
-                    onPressed: (){
-                     signUserOut();
+                    onPressed: () async {
+                      await FirebaseAuth.instance.signOut();
+                      SharedPreferences prefs =
+                          await SharedPreferences.getInstance();
+                      prefs.setBool("loggedIn", false);
+                      print(FirebaseAuth.instance.currentUser);
+                      Widget newPage =
+                          Authpage(); // Replace this with the new page you want to push
+                      removeAllAndPushNew(context, newPage);
+                      print("logout");
                     },
 
                     // padding: EdgeInsets.fromLTRB(6, 0, 10, 0),
@@ -220,6 +280,5 @@ class ProfileScreen extends StatelessWidget {
     );
   }
 }
-
 
 const profilepic = 'assets/images/man.png';

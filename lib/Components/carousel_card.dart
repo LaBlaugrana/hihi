@@ -1,7 +1,11 @@
-import 'package:hush/Components/read_more_card.dart';
-import 'package:hush/Components/read_more_card2.dart';
-import 'package:hush/Components/read_more_card3.dart';
-import 'package:hush/Components/read_more_card4.dart';
+import 'package:Hush/Components/read_more_card.dart';
+import 'package:Hush/Components/read_more_card2.dart';
+import 'package:Hush/Components/read_more_card3.dart';
+import 'package:Hush/Components/read_more_card4.dart';
+// import 'package:hush/Components/read_more_card.dart';
+// import 'package:hush/Components/read_more_card2.dart';
+// import 'package:hush/Components/read_more_card3.dart';
+// import 'package:hush/Components/read_more_card4.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 // import 'package:untitled/card-carousel/read_more-page.dart';
@@ -28,28 +32,28 @@ class Carousel extends StatelessWidget {
             child: Stack(
               children: <Widget>[
                 Image.asset(item[0], fit: BoxFit.cover, width: 1000.0),
-                Positioned(
-                  top: 13,
-                  left: 20,bottom: 15,
-
-                  child: Container(
-                    child: Text(
-                      "Article",
-                      style: TextStyle(
-                        fontFamily: 'Poppins',
-                        color: Colors.white.withOpacity(0.7),
-                        fontSize: 12.0,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                ),
+                // Positioned(
+                //   top: 13,
+                //   left: 20,bottom: 15,
+                //
+                //   child: Container(
+                //     child: Text(
+                //       "Article",
+                //       style: TextStyle(
+                //         fontFamily: 'Poppins',
+                //         color: Colors.white.withOpacity(0.7),
+                //         fontSize: 12.0,
+                //         fontWeight: FontWeight.bold,
+                //       ),
+                //     ),
+                //   ),
+                // ),
                 Positioned(
                   bottom: 0.0,
                   left: 0.0,
                   right: 0.0,
                   child: Container(
-                    padding: EdgeInsets.fromLTRB(20, 0, 40, 60),
+                    padding: EdgeInsets.fromLTRB(20, 0, 40, 65),
                     child: Text(
                       item[1],
                       style: TextStyle(

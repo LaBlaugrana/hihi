@@ -1,9 +1,13 @@
-import 'package:hush/bottom_navBar.dart';
+// import 'dart:js';
+
+// import 'package:hush/bottom_navBar.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 // import 'DisplayInfo.dart';
+import '../../bottom_navBar.dart';
 import '../Homepage.dart';
 import 'Display_Info.dart';
 
@@ -19,12 +23,6 @@ class _TrackPageState extends State<TrackPage> {
   late int questionIndex;
   late ValueNotifier<int> number;
   late List<int> numberValues; // Store previous number button values
-  final FirebaseFirestore firestore = FirebaseFirestore.instance;
-
-  void storeNumberValue(int value) {
-    final documentRef = firestore.collection('numberValues').doc();
-    documentRef.set({'value': value});
-  }
 
 
   void previousQuestion() {
@@ -45,156 +43,52 @@ class _TrackPageState extends State<TrackPage> {
     numberValues = List<int>.filled(4, 0); // Initialize list with 4 elements, all set to 0
   }
 
-  void resetFirebase(){
-    firestore.collection('numberValues').doc('duration').set({
-      'value': 0.0,
-      'count' : 0
-      // Store second question's input in 'wakes' field
-    }).catchError((error) {
-    });
-    firestore.collection('numberValues').doc('wakes').set({
-      'value': 0.0,
-      'count' : 0
-      // Store second question's input in 'wakes' field
-    }).catchError((error) {
-    });
-    firestore.collection('numberValues').doc('timeToSleep').set({
-      'value': 0.0,
-      'count' : 0
-      // Store second question's input in 'wakes' field
-    }).catchError((error) {
-    });
-    firestore.collection('numberValues').doc('quality').set({
-      'value': 0.0,
-      'count' : 0
-      // Store second question's input in 'wakes' field
-    }).catchError((error) {
-    });
-  }
 
-  void nextQuestion() {
-    setState(() {
+
+  void nextQuestion(BuildContext context) {
+    setState(() async {
       if (questionIndex < 3) {
-        storeNumberValue(number.value); // Store current number button value
         numberValues[questionIndex] = number.value;
         questionIndex++;
         number.value = numberValues[questionIndex]; // Retrieve number button value for the next case
         number.value = 0;
+        setState(() {});
       } else if (questionIndex == 3) {
 
         numberValues[questionIndex] = number.value;
-        // Store current number button value for the 4th question
-        //
-        firestore.collection('numberValues').doc('duration').get().then((doc) {
-          if (doc.exists) {
-            var curr_duration = doc.data()?['value'];
-            var cnt = doc.data()?['count'];
-            // Store each question's input in specific fields in Firebase
 
-            var avg_duration = ((numberValues[0] + (curr_duration * cnt)) / (cnt + 1));
+        double curr_sleep =  numberValues[0].toDouble();
+        double curr_wakeup =  numberValues[1].toDouble();
+        double curr_rested =  numberValues[2].toDouble();
+        double curr_quality =  numberValues[3].toDouble();
 
-            print(numberValues[0]);
-            print('avg: ${avg_duration}');
-            print('duration: ${curr_duration}');
-            print('count:  ${cnt}');
+        final SharedPreferences prefs = await SharedPreferences.getInstance();
 
-            firestore.collection('numberValues').doc('duration').set({
-              'value': avg_duration,
-              'count': (cnt + 1),
-            }).then((_) {
-              print('Updated duration: ${avg_duration}');
-              print('Updated count:  ${cnt}');
-            }).catchError((error) {
-            });
-          } else {
-          }
-        }).catchError((error) {
-        });
+        int cnt = prefs.getInt('cnt') ?? 0;
+        double avg_sleep = prefs.getDouble('avg_sleep') ?? 0.0;
+        double avg_wakeup = prefs.getDouble('avg_wakeup') ?? 0.0;
+        double avg_rested = prefs.getDouble('avg_rested') ?? 0.0;
+        double avg_quality = prefs.getDouble('avg_quality') ?? 0.0;
 
-        firestore.collection('numberValues').doc('wakes').get().then((doc) {
-          if (doc.exists) {
-            var curr_wakes = doc.data()?['value'];
-            var cnt = doc.data()?['count'];
-            // Store each question's input in specific fields in Firebase
+        double new_avg_sleep = ((numberValues[0] + (avg_sleep * cnt)) / (cnt + 1));
+        double new_avg_wakeup = ((numberValues[1] + (avg_wakeup * cnt)) / (cnt + 1));
+        double new_avg_rested = ((numberValues[2] + (avg_rested * cnt)) / (cnt + 1));
+        double new_avg_quality = ((numberValues[3] + (avg_quality * cnt)) / (cnt + 1));
 
-            var avg_wakes = ((numberValues[1] + (curr_wakes* cnt)) / (cnt + 1));
+        await prefs.setDouble('avg_sleep',new_avg_sleep);
+        await prefs.setDouble('avg_wakeup',new_avg_wakeup);
+        await prefs.setDouble('avg_rested',new_avg_rested);
+        await prefs.setDouble('avg_quality',new_avg_quality);
+        var new_cnt = cnt+1;
+        await prefs.setInt('cnt',new_cnt);
 
-            print(numberValues[1]);
-            print('avg: ${avg_wakes}');
-            print('duration: ${curr_wakes}');
-            print('count:  ${cnt}');
-
-            firestore.collection('numberValues').doc('wakes').set({
-              'value': avg_wakes,
-              'count': (cnt + 1),
-            }).then((_) {
-              print('Updated wakes: ${avg_wakes}');
-              print('Updated count:  ${cnt}');
-            }).catchError((error) {
-            });
-          } else {
-          }
-        }).catchError((error) {
-        });
-
-        firestore.collection('numberValues').doc('timeToSleep').get().then((doc) {
-          if (doc.exists) {
-            var curr_timeToSleep = doc.data()?['value'];
-            var cnt = doc.data()?['count'];
-            // Store each question's input in specific fields in Firebase
-
-            var avg_timeToSleep = ((numberValues[2] + (curr_timeToSleep* cnt)) / (cnt + 1));
-
-            print(numberValues[2]);
-            print('avg: ${avg_timeToSleep}');
-            print('duration: ${curr_timeToSleep}');
-            print('count:  ${cnt}');
-
-            firestore.collection('numberValues').doc('timeToSleep').set({
-              'value': avg_timeToSleep,
-              'count': (cnt + 1),
-            }).then((_) {
-              print('Updated timeToSleep: ${avg_timeToSleep}');
-              print('Updated count:  ${cnt}');
-            }).catchError((error) {
-            });
-          } else {
-          }
-        }).catchError((error) {
-        });
-
-        firestore.collection('numberValues').doc('quality').get().then((doc) {
-          if (doc.exists) {
-            var curr_quality = doc.data()?['value'];
-            var cnt = doc.data()?['count'];
-            // Store each question's input in specific fields in Firebase
-
-            var avg_quality = ((numberValues[3] + (curr_quality* cnt)) / (cnt + 1));
-
-            print(numberValues[3]);
-            print('avg: ${avg_quality}');
-            print('duration: ${curr_quality}');
-            print('count:  ${cnt}');
-
-            firestore.collection('numberValues').doc('quality').set({
-              'value': avg_quality,
-              'count': (cnt + 1),
-            }).then((_) {
-              print('Updated quality: ${avg_quality}');
-              print('Updated count:  ${cnt}');
-            }).catchError((error) {
-            });
-          } else {
-          }
-        }).catchError((error) {
-        });
 
         Navigator.push(
           context,
           MaterialPageRoute(builder: (context) => NavBar()),
         );
 
-        resetFirebase();
+
 
       }
     });
@@ -217,20 +111,6 @@ class _TrackPageState extends State<TrackPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(toolbarHeight: 40,automaticallyImplyLeading: false,
-          backgroundColor: Color(0xffF4F8FF),
-          actions: [
-          Padding(
-            padding: const EdgeInsets.only(top:2),
-            child: IconButton(
-
-            icon: Icon(Icons.exit_to_app),
-        color: Colors.black,
-        onPressed: () {
-              Navigator.pop(context);
-            // Do
-        }),
-          ),]),
       body: SafeArea(
         child: Stack(
           children: [
@@ -299,7 +179,7 @@ class _TrackPageState extends State<TrackPage> {
                             ),
                             IconButton(
                               onPressed: () {
-                                Navigator.push(context, MaterialPageRoute(builder: (context) => Homepage()));
+                                Navigator.push(context, MaterialPageRoute(builder: (context) => NavBar()));
                               },
                               icon: const Icon(
                                 Icons.close,
@@ -340,9 +220,9 @@ class _TrackPageState extends State<TrackPage> {
                         onPressed: () {
                           if (questionIndex == 3) {
                             const Text('Submit');
-                            nextQuestion();
+                            nextQuestion(context);
                           } else {
-                            nextQuestion();
+                            nextQuestion(context);
                           }
                         },
                         style: ButtonStyle(
@@ -402,7 +282,7 @@ Widget buildQuestion(int questionIndex) {
         alignment: WrapAlignment.center,
         children: [
           Text(
-            'How well-rested do you feel?',
+            'How easily do you fall asleep',
             textAlign: TextAlign.center,
             style: TextStyle(
               fontSize: 18,
@@ -555,3 +435,60 @@ class NumberButton extends StatelessWidget {
     );
   }
 }
+//
+// void storeNumberValue(int value) async {
+//   final prefs = await SharedPreferences.getInstance();
+//   prefs.setInt('numberValue', value);
+// }
+//
+// @override
+// void initState() {
+//   super.initState();
+//   questionIndex = 0;
+//   number = ValueNotifier<int>(0);
+//   numberValues = List<int>.filled(4, 0);
+//
+//   // Retrieve previously stored number value and update the ValueNotifier
+//   SharedPreferences.getInstance().then((prefs) {
+//     final storedValue = prefs.getInt('numberValue') ?? 0;
+//     number.value = storedValue;
+//   });
+// }
+//
+// void nextQuestion() async {
+//   setState(() {
+//     if (questionIndex < 3) {
+//       storeNumberValue(number.value);
+//       numberValues[questionIndex] = number.value;
+//       questionIndex++;
+//       number.value = numberValues[questionIndex];
+//       number.value = 0;
+//     } else if (questionIndex == 3) {
+//       // Rest of your code...
+//
+//       SharedPreferences prefs = await SharedPreferences.getInstance();
+//       prefs.setDouble('avgDuration', avg_duration);
+//       prefs.setDouble('avgWakes', avg_wakes);
+//       prefs.setDouble('avgTimeToSleep', avg_timeToSleep);
+//       prefs.setDouble('avgQuality', avg_quality);
+//
+//       Navigator.push(
+//         context as BuildContext,
+//         MaterialPageRoute(builder: (context) => NavBar()),
+//       );
+//
+//       resetSharedPreferences();
+//     }
+//   });
+// }
+//
+// void resetSharedPreferences() async {
+//   SharedPreferences prefs = await SharedPreferences.getInstance();
+//   prefs.remove('numberValue');
+//   prefs.remove('avgDuration');
+//   prefs.remove('avgWakes');
+//   prefs.remove('avgTimeToSleep');
+//   prefs.remove('avgQuality');
+// }
+//
+//

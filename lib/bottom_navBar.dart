@@ -1,10 +1,15 @@
 // import 'package:Hush/Journal1/main.dart';
 
 import 'package:flutter/material.dart';
-import 'package:hush/Pages/Homepage.dart';
-import 'package:hush/Pages/Journal1/note1.dart';
-import 'package:hush/Pages/Track/Track_homepage.dart';
-import 'package:hush/Pages/profile.dart';
+// import 'package:hush/Pages/Homepage.dart';
+// import 'package:hush/Pages/Journal1/note1.dart';
+// import 'package:hush/Pages/Track/Track_homepage.dart';
+// import 'package:hush/Pages/profile.dart';
+
+import 'Pages/Homepage.dart';
+import 'Pages/Journal1/note1.dart';
+import 'Pages/Track/Track_homepage.dart';
+import 'Pages/profile.dart';
 
 
 
@@ -18,14 +23,14 @@ class NavBar extends StatefulWidget {
 class _NavBarState extends State<NavBar> {
   int currentIndex = 0;
   final screens = [
-    // if you want to add your acutal pages you can add as follows:
+    // Add your acutal pages as follows:
     Homepage(),
     TrackPage(),
     NoteListScreen(),
     ProfileScreen(),
-
-
   ];
+
+
 
   @override
   Widget build(BuildContext context) {

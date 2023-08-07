@@ -92,7 +92,7 @@ class _NoteListScreenState extends State<NoteListScreen> {
                     fontSize: 21,
                   ),
                 ),
-                SizedBox(height: 8), // Add a SizedBox for vertical spacing
+                SizedBox(height: 10), // Add a SizedBox for vertical spacing
                 Padding(
                   padding: EdgeInsets.fromLTRB(0, 0, 0, 6), // Add left padding to create margin
                   child: Text(
@@ -109,9 +109,7 @@ class _NoteListScreenState extends State<NoteListScreen> {
               padding: const EdgeInsets.only(right:0),
               child: SizedBox(height:100,width:100,child: Image.asset("assets/images/note.png")),
             ),
-          IconButton(icon: Icon(Icons.arrow_back),
-          color: Colors.black,
-          onPressed: () => Navigator.of(context).pop(),)
+
           ],
         ),
         
@@ -135,6 +133,7 @@ class _NoteListScreenState extends State<NoteListScreen> {
               borderRadius: BorderRadius.circular(10),
               border: Border.all(color: Colors.blue, width: 2),
             ),
+
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: ListTile(
@@ -234,12 +233,14 @@ class AddNoteScreen extends StatelessWidget {
         padding: EdgeInsets.all(16.0),
         child: Column(
           children: [
-            TextField(
-              controller: _textEditingController,
-              maxLines: null,
-              decoration: InputDecoration(
-                labelText: 'Write here',
-                border: InputBorder.none,
+            Flexible(
+              child: TextField(
+                controller: _textEditingController,
+                maxLines: null,
+                decoration: InputDecoration(
+                  labelText: 'Write here',
+                  border: InputBorder.none,
+                ),
               ),
             ),
           ],
@@ -311,12 +312,14 @@ class _EditNoteScreenState extends State<EditNoteScreen> {
         padding: EdgeInsets.all(16.0),
         child: Column(
           children: [
-            TextField(
-              controller: _textEditingController,
-              maxLines: null,
-              decoration: InputDecoration(
-                labelText: 'Write here',
-                border: InputBorder.none,
+            Flexible(
+              child: TextField(
+                controller: _textEditingController,
+                maxLines: null,
+                decoration: InputDecoration(
+                  labelText: 'Write here',
+                  border: InputBorder.none,
+                ),
               ),
             ),
           ],

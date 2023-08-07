@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:hush/main_page.dart';
+// import 'package:hush/auth/auth_page.dart';
+// import 'package:hush/main_page.dart';
 import 'package:liquid_swipe/liquid_swipe.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+
+import '../auth/auth_page.dart';
+import '../main_page.dart';
 
 // import 'package:untitled/screens/home_page/pages/new-main.dart';
 
@@ -38,68 +42,67 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return
-      Scaffold(
-        body: Container(
-          decoration: const BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage(bgimg),
-              fit: BoxFit.cover,
-            ),
-          ),
-          alignment: Alignment.center,
-          child: Stack(
-            children: [
-              AnimatedPositioned(
-                height: 400,
-                top: animate ? MediaQuery.of(context).size.height / 2 - 220 : -400,
-                right: animate ? MediaQuery.of(context).size.height / -75 : -5,
-                duration: const Duration(milliseconds: 1600),
-                curve: Curves.easeInOut,
-                child: const Image(image: AssetImage(spimg)),
-              ),
-              // SizedBox(height: 1,),
-              const Positioned(
-                bottom: 110, // Adjust the position as needed
-                left: 0,
-                right: 0,
-                child: Column(
-                  children: [
-                    Text(
-                      'Hush',
-                      style: TextStyle(
-                        fontSize: 38,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                      ),
-                    ),
-                    SizedBox(height: 10,),
-                    Text.rich(
-                      TextSpan(
-                        style: TextStyle(
-                          fontSize: 18,
-                          color: Colors.white,
-                        ),
-                        children: [
-                          TextSpan(text: 'Your journey to a better sleep'),
-                          TextSpan(text: '\n                   with hush!'),
-                        ],
-                      ),
-                    ),
-
-                  ],
-                ),
-              ),],
+    return Scaffold(
+      body: Container(
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage(bgimg),
+            fit: BoxFit.cover,
           ),
         ),
-      );
-
+        alignment: Alignment.center,
+        child: Stack(
+          children: [
+            AnimatedPositioned(
+              height: 400,
+              top:
+                  animate ? MediaQuery.of(context).size.height / 2 - 220 : -400,
+              right: animate ? MediaQuery.of(context).size.height / -75 : -5,
+              duration: const Duration(milliseconds: 1600),
+              curve: Curves.easeInOut,
+              child: const Image(image: AssetImage(spimg)),
+            ),
+            // SizedBox(height: 1,),
+            const Positioned(
+              bottom: 110, // Adjust the position as needed
+              left: 0,
+              right: 0,
+              child: Column(
+                children: [
+                  Text(
+                    'Hush',
+                    style: TextStyle(
+                      fontSize: 38,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    ),
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Text.rich(
+                    TextSpan(
+                      style: TextStyle(
+                        fontSize: 18,
+                        color: Colors.white,
+                      ),
+                      children: [
+                        TextSpan(text: 'Your journey to a better sleep'),
+                        TextSpan(text: '\n                   with hush!'),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }
 
 //Splash Screen Ends Here//
-
-
 
 //OnBoarding Screen starts from here//
 
@@ -119,7 +122,6 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
 
-
     final pages = [
       OnBoardingPageWidget(
         model: OnBoardingModel(
@@ -128,6 +130,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
           subTitle: onBoardPg1subtitle,
           bgColor: onBoardPg1color,
           size: size.height,
+          // skip: skip,
         ),
       ),
       OnBoardingPageWidget(
@@ -137,6 +140,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
           subTitle: onBoardPg2subtitle,
           bgColor: onBoardPg2color,
           size: size.height,
+          // skip: skip,
         ),
       ),
       OnBoardingPageWidget(
@@ -146,6 +150,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
           subTitle: onBoardPg3subtitle,
           bgColor: onBoardPg3color,
           size: size.height,
+          // skip: skip,
         ),
       ),
       OnBoardingPageWidget(
@@ -155,6 +160,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
           subTitle: onBoardPg4subtitle,
           bgColor: onBoardPg4color,
           size: size.height,
+          // skip: skip,
         ),
       ),
     ];
@@ -167,72 +173,91 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
 
     return Scaffold(
         body: Stack(
-          alignment: Alignment.center,
-          children: [
-            LiquidSwipe(
-              liquidController: controller,
-              pages: pages,
-              slideIconWidget: const Icon(Icons.arrow_back_ios),
-              // enableSideReveal: true,
-              onPageChangeCallback: onPageChangedCallBack,
+      alignment: Alignment.center,
+      children: [
+        LiquidSwipe(
+          // ignoreUserGestureWhileAnimating: false,
+          // enableSideReveal: false,
+          waveType: WaveType.liquidReveal,
+          liquidController: controller,
+          pages: pages,
+          // slideIconWidget: const Icon(Icons.arrow_back_ios), // Remove or comment out this line
+          // enableSideReveal: true,
+          onPageChangeCallback: onPageChangedCallBack,
+        ),
+
+        Positioned(
+          bottom: 64.0,
+          child: OutlinedButton(
+            onPressed: () {
+              int nextPage = controller.currentPage + 1;
+              if (nextPage < 4) {
+                print(nextPage);
+                controller.animateToPage(page: nextPage);
+              } else {
+                print("working");
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => const MainPage()),
+                );
+              }
+            },
+            style: OutlinedButton.styleFrom(
+              side: const BorderSide(color: Colors.white60),
+              shape: const CircleBorder(),
+              padding: const EdgeInsets.all(5),
+              // primary: Colors.white,
             ),
-            Positioned(
-              bottom: 64.0,
-              child: OutlinedButton(
-                onPressed: () {
-                  int nextPage = controller.currentPage + 1;
-                  if (nextPage < 4) {
-                    print(nextPage);
-                    controller.animateToPage(page: nextPage);
-                  } else {
-                    print("working");
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => const MainPage()),
-                    );
-                  }
-                },
-                style: OutlinedButton.styleFrom(
-                  side: const BorderSide(color: Colors.white60),
-                  shape: const CircleBorder(),
-                  padding: const EdgeInsets.all(5),
-                  // primary: Colors.white,
-                ),
-                child: Container(
-                  padding: const EdgeInsets.all(25),
-                  decoration: const BoxDecoration(
-                    color: Colors.black87,
-                    shape: BoxShape.circle,
-                  ),
-                  child: const Icon(Icons.arrow_forward_ios_outlined),
-                ),
+            child: Container(
+              padding: const EdgeInsets.all(25),
+              decoration: const BoxDecoration(
+                color: Colors.black87,
+                shape: BoxShape.circle,
               ),
-
-            ),         //button
-            Positioned(
-              bottom:14,
-              child: AnimatedSmoothIndicator(
-                activeIndex: controller.currentPage,
-                count: 4,
-                effect: const JumpingDotEffect(
-                  activeDotColor: Colors.white,
-                  dotColor: Colors.black54,
-                  dotHeight: 12.0,
-                  dotWidth: 12.0,
-                  spacing: 10.0,
-                ),
-              ),
-            )     //round page indicator
-
-          ],
-        ));
+              child: const Icon(Icons.arrow_forward_ios_outlined),
+            ),
+          ),
+        ), //button
+        Positioned(
+          bottom: 14,
+          child: AnimatedSmoothIndicator(
+            activeIndex: controller.currentPage,
+            count: 4,
+            effect: const JumpingDotEffect(
+              activeDotColor: Colors.white,
+              dotColor: Colors.black54,
+              dotHeight: 12.0,
+              dotWidth: 12.0,
+              spacing: 10.0,
+            ),
+          ),
+        ),
+        Positioned(
+          top: 65,
+          right: 10,
+          child: TextButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => Authpage()),
+              );
+            }, child: Text(""),
+            // child: Text(
+            //   'Skip',
+            //   style: TextStyle(
+            //       fontSize: 17,
+            //       color: Colors.white,
+            //       fontFamily: 'Poppins',
+            //       fontWeight: FontWeight.w400),
+            // ),
+          ),
+        ), //round page indicator
+      ],
+    ));
   }
 }
 
-
-
 class OnBoardingPageWidget extends StatelessWidget {
-
   const OnBoardingPageWidget({
     Key? key,
     required this.model,
@@ -289,6 +314,7 @@ class OnBoardingModel {
   final String subTitle;
   final Color bgColor;
   final double size;
+  // final String skip;
 
   OnBoardingModel({
     required this.image,
@@ -296,9 +322,9 @@ class OnBoardingModel {
     required this.subTitle,
     required this.bgColor,
     required this.size,
+    // required this.skip,
   });
 }
-
 
 //Various constant values for image, color, and texts for different color//
 const onBoardPg1color = Color(0xFF307185); // Update color value
@@ -320,6 +346,8 @@ const String onBoardPg2title = "JOURNAL";
 const String onBoardPg3title = "QUEST";
 const String onBoardPg4title = "GAMES";
 
+// const String skip = "Skip";
+
 const String onBoardPg1subtitle =
     "Track your sleep and Gain insights into your sleep patterns";
 const String onBoardPg2subtitle =
@@ -330,5 +358,3 @@ const String onBoardPg4subtitle =
     "Unwind and have a great time with our entertaining games.";
 
 //OnBoarding Screen Ends Here//
-
-

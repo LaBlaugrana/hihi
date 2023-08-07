@@ -1,4 +1,5 @@
-import 'package:hush/Pages/SlumberQuest/quizz_screen.dart';
+import 'package:Hush/Pages/SlumberQuest/quizz_screen.dart';
+// import 'package:hush/Pages/SlumberQuest/quizz_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 // import 'package:quizz_app/screens/quizz_screen.dart';
